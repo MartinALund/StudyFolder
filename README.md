@@ -1,15 +1,16 @@
 # StudyFolder
 
-One of my first functional programs which i could use my self. First created summer 2017, heavily updated 18/02-2018.
+One of my first functional programs which i could use myself. First created in january 2017, heavily updated 18/02-2018.
 
 ## What is it about?
 
-The program is a very simple folder management program. It is designed for school
+The program is a very simple folder management program. It is designed for school usage
 
 You get to choose the following:
 
 - Where do you want the folder to be made
-- Which semester do you need, and which courses do you have on that semester
+- Which semester do you need
+- Which courses do you have on that semester
 
 The program will then create the folders you requested with 7 subfolders.
 
