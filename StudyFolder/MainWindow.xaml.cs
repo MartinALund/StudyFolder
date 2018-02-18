@@ -22,7 +22,7 @@ namespace StudyFolder
     public partial class MainWindow : Window
     {
         string selectedPath;
-        static List<string> folders = new List<string>()
+        List<string> folders = new List<string>()
         {
             "Litteratur",
             "Opgaver",
@@ -32,25 +32,39 @@ namespace StudyFolder
             "Gode Links",
             "Tips",
         };
+        List<int> semesters = new List<int>(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 });
 
         public MainWindow()
         {
             InitializeComponent();
-            comboBox.Items.Add("1");
-            comboBox.Items.Add("2");
-            comboBox.Items.Add("3");
-            comboBox.Items.Add("4");
-            comboBox.Items.Add("5");
-            comboBox.Items.Add("6");
-            comboBox.Items.Add("7");
-            comboBox.Items.Add("8");
-            comboBox.Items.Add("9");
+            semesterComboBox.Items.Add("Angiv semester");
+
+            foreach (int value in semesters)
+            {
+                semesterComboBox.Items.Add(value.ToString() + ". Semester");
+            }
+
+            semesterComboBox.SelectedIndex = 0;
+
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private void CleanUp()
         {
+            foreach (System.Windows.Controls.Control childCtrl in MainGrid.Children)
+            {
+                if (childCtrl is System.Windows.Controls.TextBox)
+                {
+                    System.Windows.Controls.TextBox Txtbox = (System.Windows.Controls.TextBox)childCtrl;
+                    Txtbox.Clear();
+                }
+            }
+            semesterComboBox.SelectedIndex = 0;
+        }
 
-            string folderPath = selectedPath + "\\" + comboBox.SelectedItem + ". Semester";
+        private void CreateDirectories()
+        {
+            string folderPath = selectedPath + "\\" + semesterComboBox.SelectedItem;
+
             System.IO.Directory.CreateDirectory(folderPath);
 
             foreach (System.Windows.Controls.Control childCtrl in MainGrid.Children)
@@ -70,10 +84,8 @@ namespace StudyFolder
                     }
                 }
             }
-            System.Windows.Forms.MessageBox.Show("Folders & subfolders created successfully");
         }
-
-        private void button_Click_1(object sender, RoutedEventArgs e)
+        private void CreatePath_Click(object sender, RoutedEventArgs e)
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -81,6 +93,27 @@ namespace StudyFolder
                 selectedPath = fbd.SelectedPath;
                 pathLbl.Content = selectedPath;
             }
+        }
+
+        private void CreateFolders_Click(object sender, RoutedEventArgs e)
+        {
+            if (semesterComboBox.SelectedIndex == 0)
+            {
+                System.Windows.Forms.MessageBox.Show("Du skal angive et semester");
+                semesterComboBox.SelectedIndex = 0;
+                return;
+            }
+
+            if (selectedPath == null)
+            {
+                System.Windows.Forms.MessageBox.Show("Du skal angive en sti til dine mapper");
+                return;
+            }
+
+            CreateDirectories();
+
+            CleanUp();
+            System.Windows.Forms.MessageBox.Show("Mapper oprettet");
         }
     }
 }
