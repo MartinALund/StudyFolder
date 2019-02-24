@@ -1,6 +1,6 @@
 # StudyFolder
 
-One of my first functional programs which i could use myself. First created in january 2017, heavily updated 18/02-2018.
+One of my first functional programs. First created in january 2017, updated on 18-02-2018.
 
 ## What is it about?
 
